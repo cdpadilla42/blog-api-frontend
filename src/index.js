@@ -26,18 +26,27 @@ async function displayContent() {
 
 function createPostElement(postContent) {
   let postDiv = document.createElement('div');
-  let titleDiv = document.createElement('div');
+  let postBodyDiv = document.createElement('div');
+  let postFooter = document.createElement('div');
+  let titleHeading = document.createElement('h5');
   let textDiv = document.createElement('div');
   let dateDiv = document.createElement('div');
 
-  titleDiv.innerText = postContent.title;
+  postDiv.classList.add('card');
+  postBodyDiv.classList.add('card-body');
+  titleHeading.classList.add('card-title');
+  postFooter.classList.add('card-footer');
+  postFooter.classList.add('text-muted');
+
+  titleHeading.innerText = postContent.title;
   textDiv.innerText = postContent.text;
   dateDiv.innerText = postContent.date;
 
-  postDiv.appendChild(titleDiv);
-  postDiv.appendChild(textDiv);
-  postDiv.appendChild(dateDiv);
-
+  postBodyDiv.appendChild(titleHeading);
+  postBodyDiv.appendChild(textDiv);
+  postFooter.appendChild(dateDiv);
+  postDiv.appendChild(postBodyDiv);
+  postDiv.appendChild(postFooter);
   return postDiv;
 }
 
