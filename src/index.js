@@ -17,37 +17,41 @@ async function displayContent() {
   const content = await getContent();
   console.log(content);
   content.forEach((post) => {
-    let postDiv = createPostElement(post);
-    body.appendChild(postDiv);
+    let postElement = createPostElement(post);
+    body.appendChild(postElement);
   });
 }
 
 // DOM Manipulation
 
 function createPostElement(postContent) {
-  let postDiv = document.createElement('div');
-  let postBodyDiv = document.createElement('div');
+  let postElement = document.createElement('div');
+  let postBodyElement = document.createElement('div');
   let postFooter = document.createElement('div');
   let titleHeading = document.createElement('h5');
-  let textDiv = document.createElement('div');
-  let dateDiv = document.createElement('div');
+  let postTextElement = document.createElement('div');
+  let dateElement = document.createElement('div');
+  let authorElement = document.createElement('p');
 
-  postDiv.classList.add('card');
-  postBodyDiv.classList.add('card-body');
+  postElement.classList.add('card');
+  postBodyElement.classList.add('card-body');
   titleHeading.classList.add('card-title');
   postFooter.classList.add('card-footer');
   postFooter.classList.add('text-muted');
+  authorElement.classList.add('text-muted');
 
   titleHeading.innerText = postContent.title;
-  textDiv.innerText = postContent.text;
-  dateDiv.innerText = postContent.date;
+  postTextElement.innerText = postContent.text;
+  dateElement.innerText = postContent.date;
+  authorElement.innerText = postContent.author;
 
-  postBodyDiv.appendChild(titleHeading);
-  postBodyDiv.appendChild(textDiv);
-  postFooter.appendChild(dateDiv);
-  postDiv.appendChild(postBodyDiv);
-  postDiv.appendChild(postFooter);
-  return postDiv;
+  postBodyElement.appendChild(titleHeading);
+  postBodyElement.appendChild(postTextElement);
+  postBodyElement.appendChild(authorElement);
+  postFooter.appendChild(dateElement);
+  postElement.appendChild(postBodyElement);
+  postElement.appendChild(postFooter);
+  return postElement;
 }
 
 displayContent();
