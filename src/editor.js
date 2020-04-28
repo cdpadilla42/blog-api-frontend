@@ -119,7 +119,7 @@ function addPublishedDisplay(post) {
 }
 
 async function togglePublished(post) {
-  // create copy of post
+  // create copy of post w/ flipped boolean
   const updatedPost = {
     title: post.title,
     text: post.text,
@@ -128,10 +128,33 @@ async function togglePublished(post) {
     user: post.user,
     _id: post._id,
   };
-  console.log(updatedPost);
-  // adjust published boolean and reverse
   // send PUT request to appropriate endpoint
+  const putResult = await sendPUTRequest(updatedPost);
   // log results
+  console.log('From the toogglePublished function', putResult);
+}
+
+async function sendPUTRequest(updatedPost) {
+  // send PUT request
+  try {
+    const returnedResult = await fetch(
+      `http://localhost:3000/api/posts/${updatedPost._id}`,
+      {
+        mode: 'cors',
+        method: 'put',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedPost),
+      }
+    );
+    const returnedPost = await returnedResult.json();
+    console.log('From the sentPUTRequest function: ', returnedPost);
+    return returnedPost.post;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
 }
 
 postForm.addEventListener('submit', sendFormData);
