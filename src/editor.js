@@ -100,13 +100,38 @@ function addPublishedDisplay(post) {
   // add button to toggle published
 
   const publishBttn = document.createElement('button');
+  // class for custom CSS
+  publishBttn.classList.add('publish__button');
   if (postPublished) {
     publishBttn.classList.add('btn');
     publishBttn.classList.add('btn-primary');
+    publishBttn.innerText = 'Unpublish Post';
+  } else {
+    publishBttn.classList.add('btn');
+    publishBttn.classList.add('btn-warning');
+    publishBttn.innerText = 'Publish Post';
   }
-  // TODO COMPLETE BUTTON
+  publishBttn.addEventListener('click', () => togglePublished(post));
+
+  postPublishedDisplay.appendChild(publishBttn);
 
   return postPublishedDisplay;
+}
+
+async function togglePublished(post) {
+  // create copy of post
+  const updatedPost = {
+    title: post.title,
+    text: post.text,
+    date: post.date,
+    published: !post.published,
+    user: post.user,
+    _id: post._id,
+  };
+  console.log(updatedPost);
+  // adjust published boolean and reverse
+  // send PUT request to appropriate endpoint
+  // log results
 }
 
 postForm.addEventListener('submit', sendFormData);
