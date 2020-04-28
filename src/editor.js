@@ -91,7 +91,6 @@ function addPublishedDisplay(post) {
   // take in published info from post object
   const postPublished = post.published ? 'Published' : 'Not Published';
   // render displayed or not
-  console.log(`${post.title}: ${postPublished}`);
 
   const postPublishedDisplay = document.createElement('div');
   postPublishedDisplay.classList.add('card-header');
@@ -102,7 +101,7 @@ function addPublishedDisplay(post) {
   const publishBttn = document.createElement('button');
   // class for custom CSS
   publishBttn.classList.add('publish__button');
-  if (postPublished) {
+  if (post.published) {
     publishBttn.classList.add('btn');
     publishBttn.classList.add('btn-primary');
     publishBttn.innerText = 'Unpublish Post';
@@ -111,7 +110,10 @@ function addPublishedDisplay(post) {
     publishBttn.classList.add('btn-warning');
     publishBttn.innerText = 'Publish Post';
   }
-  publishBttn.addEventListener('click', () => togglePublished(post));
+  publishBttn.addEventListener('click', (e) => {
+    togglePublished(post);
+    togglePublishedDisplay(post, e.target);
+  });
 
   postPublishedDisplay.appendChild(publishBttn);
 
@@ -131,7 +133,21 @@ async function togglePublished(post) {
   // send PUT request to appropriate endpoint
   const putResult = await sendPUTRequest(updatedPost);
   // log results
-  console.log('From the toogglePublished function', putResult);
+  console.log(putResult);
+  return;
+}
+
+function togglePublishedDisplay(post, btn) {
+  if (!post.published) {
+    btn.classList.remove('btn-warning');
+    btn.classList.add('btn-primary');
+    btn.innerText = 'Post Published!';
+  } else {
+    btn.classList.remove('btn-primary');
+    btn.classList.add('btn-warning');
+    btn.innerText = 'Post unpublished!';
+  }
+  return;
 }
 
 async function sendPUTRequest(updatedPost) {
@@ -149,7 +165,6 @@ async function sendPUTRequest(updatedPost) {
       }
     );
     const returnedPost = await returnedResult.json();
-    console.log('From the sentPUTRequest function: ', returnedPost);
     return returnedPost.post;
   } catch (err) {
     console.log(err);
