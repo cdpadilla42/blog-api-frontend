@@ -78,6 +78,7 @@ async function sendFormData(e) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
+      redirect: 'follow',
     });
     const post = await returnedResult.json();
     console.log(post);
@@ -163,6 +164,7 @@ async function sendPUTRequest(updatedPost) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(updatedPost),
+        redirect: 'follow',
       }
     );
     const returnedPost = await returnedResult.json();
