@@ -1,4 +1,5 @@
 const postForm = document.querySelector('.post_form');
+const body = document.querySelector('.content');
 
 async function getContent() {
   const response = await fetch('http://localhost:3000/api/posts', {
@@ -89,12 +90,12 @@ function addPublishedDisplay(post) {
   const publishedText = document.createElement('h5');
   publishedText.classList.add('card-header');
   // take in published info from post object
-  const postPublished = post.published ? 'Published' : 'Not Published';
+  // const postPublished = post.published ? 'Published' : 'Not Published';
   // render displayed or not
 
   const postPublishedDisplay = document.createElement('div');
   postPublishedDisplay.classList.add('card-header');
-  postPublishedDisplay.innerText = postPublished;
+  // postPublishedDisplay.innerText = postPublished;
 
   // add button to toggle published
 
@@ -171,6 +172,13 @@ async function sendPUTRequest(updatedPost) {
     return;
   }
 }
+
+document.querySelector('.form__btn').addEventListener('click', (e) => {
+  let btn = e.target;
+  btn.classList.remove('btn-primary');
+  btn.classList.add('btn-success');
+  btn.value = 'Draft Saved!';
+});
 
 postForm.addEventListener('submit', sendFormData);
 displayContent();

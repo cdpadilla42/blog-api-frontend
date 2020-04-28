@@ -14,7 +14,7 @@ async function getContent() {
 // Connect DOM to Content
 
 async function displayContent() {
-  const content = await getContent.getContent();
+  const content = await getContent();
   content.forEach((post) => {
     let postElement = createPostElement(post);
     body.appendChild(postElement);
